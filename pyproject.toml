@@ -14,6 +14,7 @@ voluptuous = "^0.13.1"
 pytest-voluptuous = "^1.2.0"
 selene = "2.0.0b17"
 allure-pytest = "^2.12.0"
+curlify = "^2.2.1"
 
 [build-system]
 requires = ["poetry-core"]
