@@ -13,7 +13,15 @@ pytest = "^7.2.1"
 voluptuous = "^0.13.1"
 pytest-voluptuous = "^1.2.0"
 selene = "2.0.0b17"
+allure-pytest = "^2.12.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+log_cli = true
+log_cli_level = "INFO"
+log_cli_format = "%(asctime)s %(message)s"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
+addopts = " -s --alluredir=allure-results --allure-no-capture"
