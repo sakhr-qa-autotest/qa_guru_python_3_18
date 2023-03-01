@@ -15,15 +15,13 @@ def allure_logger(func):
 
             allure.attach(body=to_curl(response.request).encode('utf8'), name=f"Request: {response.status_code}",
                           attachment_type=allure.attachment_type.TEXT, extension='.txt')
-
             try:
                 allure.attach(body=json.dumps(response.json(), indent=4), name=f"Response: {response.status_code}",
                               attachment_type=allure.attachment_type.JSON, extension='.json')
             except:
                 allure.attach(body=response.text, name=f"Response: {response.status_code}",
                               attachment_type=allure.attachment_type.TEXT, extension='.txt')
-
-                return response
+            return response
 
     return wrapper
 
@@ -50,5 +48,5 @@ class BaseSession(Session):
         return response
 
 
-regres = BaseSession('https://reqres.in/api/')
+reqres = BaseSession('https://reqres.in/api/')
 demoshop = BaseSession('https://demowebshop.tricentis.com')
