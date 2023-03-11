@@ -46,7 +46,3 @@ class BaseSession(Session):
     def request(self, method, url, **kwargs) -> Response:
         response = super().request(method, self.url + url, **kwargs)
         return response
-
-
-reqres = BaseSession('https://reqres.in/api/')
-demoshop = BaseSession('https://demowebshop.tricentis.com')

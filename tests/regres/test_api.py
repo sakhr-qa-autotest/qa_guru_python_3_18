@@ -2,22 +2,21 @@ import allure
 from pytest_voluptuous import S
 
 from schemas.user import user
-from utils.base_session import reqres
 
 
-def test_status_code():
+def test_status_code(reqres):
     with allure.step('Status code'):
         response = reqres.get('users?page=1')
         assert response.status_code == 200
 
 
-def test_schema():
+def test_schema(reqres):
     with allure.step('Schema'):
         response = reqres.get('users/2')
         assert S(user) == response.json()['data']
 
 
-def test_login_successful():
+def test_login_successful(reqres):
     with allure.step('Login successful'):
         response = reqres.post('login', json={
             "email": "eve.holt@reqres.in",
@@ -28,7 +27,7 @@ def test_login_successful():
     assert len(response.json().get('token')) >= 1
 
 
-def test_login_unsuccessful():
+def test_login_unsuccessful(reqres):
     with allure.step('Login unsuccessful'):
         response = reqres.post('login', json={
             "email": "eve.holt@reqres.in"
@@ -38,7 +37,7 @@ def test_login_unsuccessful():
         assert response.json().get('error') >= 'Missing password'
 
 
-def test_create_successful():
+def test_create_successful(reqres):
     with allure.step('Create successful'):
         response = reqres.post('users', json={
             "id": 999,
