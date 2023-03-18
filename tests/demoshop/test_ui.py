@@ -3,14 +3,9 @@ from selene import have
 
 
 def test_register(window, demoqa):
-    response = demoqa.post(
-        '/login',
-        json={'Email': 'sopemoc825@vootin.com', 'Password': '4!sG!enS!Kieg'},
-        allow_redirects=False
-    )
-    authorization_cookie = response.cookies.get("NOPCOMMERCE.AUTH")
-
-    window.driver.add_cookie({"name": "NOPCOMMERCE.AUTH", "value": authorization_cookie})
+    result = demoqa.login('sopemoc825@vootin.com', '4!sG!enS!Kieg')
+    demoqa.authorization_cookie(result)
+    window.driver.add_cookie(demoqa.authorizationCookie)
 
 
 def test_open_account(window):
@@ -21,7 +16,7 @@ def test_open_account(window):
 
 def test_clear_cart(window, demoqa):
     with allure.step('Clear cart'):
-        demoqa.post('/addproducttocart/catalog/31/1/1')
+        demoqa.demoqa.post('/addproducttocart/catalog/31/1/1')
         window.element('.ico-cart').click()
         window.element('.qty-input').clear().send_keys(0).press_enter()
         window.element('div.order-summary-content').should(
@@ -38,5 +33,5 @@ def test_successful_search(window):
 def test_logout(window, demoqa):
     with allure.step('Logout'):
         window.element('.ico-logout').click()
-        response = demoqa.get('/logout', allow_redirects=False)
+        response = demoqa.demoqa.get('/logout', allow_redirects=False)
         assert response.status_code == 302
